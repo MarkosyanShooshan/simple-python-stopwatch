@@ -1,57 +1,23 @@
+import time
 
-
-from game_data import data
-import random
-
-def get_random_account():
-    """get data from random account"""
-    return random.choice(data)
-
-def format_data(account):
-    """format account into printable format: name, description and country"""
-    name = account["name"]
-    description = account["description"]
-    country = account["country"]
-    return f"{name}, a {description}, from {country}"
-
-def check_answer(guess, a_followers, b_followers):
-    if a_followers > b_followers:
-        return guess == "a"
-    else:
-        return guess == "b"
-
-def game():
-    score = 0
-    game_should_continue = True
-    account_a = get_random_account()
-    account_b = get_random_account()   
-
-    while game_should_continue:
-        account_a = account_b
-        account_b = get_random_account()
-
-        while account_a == account_b:
-            account_b = get_random_account()
-
-        print(f"Compare A: {format_data(account_a)}.")
-        print("vs")
-        print(f"Against B: {format_data(account_b)}.")
-
-        guess = input("Who has more followers? Type 'A' or 'B': ").lower()
-        a_follower_count = account_a["follower_count"]
-        b_follower_count = account_b["follower_count"]
-        is_correct = check_answer(guess, a_follower_count, b_follower_count)
-       
-        name_a = account_a["name"]
-        name_b = account_b["name"]
-
-        if is_correct:
-            score += 1
-            print(f"\nYou're right! {name_a} has {a_follower_count}M followers, while {name_b} has {b_follower_count}M followers.")
-            print(f"Current score: {score}.\n") 
+def stopwatch():
+    while True:
+        command = input("\nEnter '1' to start the stopwatch or '2' to exit: ").strip()
+        
+        if command == '1':
+            input("Press Enter to START the stopwatch...")
+            start_time = time.time()
+            
+            input("Stopwatch is running... Press Enter to STOP!")
+            end_time = time.time()
+            
+            elapsed_time = end_time - start_time
+            print(f"Elapsed time: {elapsed_time:.2f} seconds")
+        elif command == '2':
+            print("Goodbye!")
+            break
         else:
-            game_should_continue = False
-            print(f"\nSorry, that's wrong. {name_a} has {a_follower_count}M followers, while {name_b} has {b_follower_count}M followers.")
-            print(f"Final score: {score}")
+            print("Invalid command! Please try again.")
 
-game()
+stopwatch()
+
